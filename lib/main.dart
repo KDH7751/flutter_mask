@@ -46,24 +46,16 @@ class GetMyHomepageController extends GetxController { //여기를 채워야 함
 
     final jsonStores = jsonResult['stores']; // 리스트에 stores에 해당하는 부분만 불러오기 위해서 만듬
 
-    /*
-    setState(() { //setstate로 상태 변경시 아래 initstate에서 fetch를 불러와줌
-      stores.clear(); //stores에 있는 값을 위쪽 리스트 만들기에 있는 리스트에 넣어주는 부분임
-      jsonStores.forEach((e) {
-        stores.add(Store.fromJson(e));
-      });
-    });
-     */
     stores.clear(); //밖으로 뺌
     jsonStores.forEach((e){
       stores.add(Store.fromJson(e));
     });
 
     isLoading.value = false; //isloading을 setstate 밖으로 뺌
-    print('fetch완료'); //fetch사 제대로 잘 됬는지 알수없으니까 로그 띄워주는 용도
+    print('fetch완료'); //fetch가 제대로 잘 됬는지 알수없으니까 로그 띄워주는 용도
   }
 
-  @override //위쪽 setstate로 상태 변경시 initstate에서 fetch를 불러와줌, initstate에서 oninit로 변경함
+  @override //위쪽 setstate로 상태 변경시 initstate에서 fetch를 불러와줌, initstate에서 oninit으로 변경함, 위치가 어디에 있던 처음 시작할때 fetch를 불러와주는 역할인 것 같음
   void onInit() {
     super.onInit();
     fetch();
@@ -78,7 +70,7 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
   @override //UI 부분에 해당하는 위젯.
   Widget build(BuildContext context) {
 
-    //컨트롤러가 원래 여기서 생성이 되어야 하는데 생성이 안되고 있어서 oninit가 실행이 안되고있음.
+    //컨트롤러가 원래 여기서 생성이 되어야 하는데 생성이 안되고 있어서 oninit 이 실행이 안되고있음.
     //binding을 걸던가 변수로 만들던가 해야 함.
     Get.putAsync<GetMyHomepageController>(() async => await GetMyHomepageController()); //바인딩 해줌
 
@@ -92,14 +84,14 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
         })
             .length}곳'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.refresh),onPressed: GetMyHomepageController.fetch,) //새로고침 버튼 눌렀을때 fetch를 하라고 함
+          IconButton(icon: Icon(Icons.refresh),onPressed: GetMyHomepageController.fetch,) //새로고침 버튼 눌렀을때 fetch를 하라고 함,GetMyHomepageController.fetch로 변경
         ],
       ),
 
-      body: Obx(() { //여기 참고할 것, obx랑 builder로 감쌌음.
-        return GetMyHomepageController.isLoading.value
+      body: Obx(() { //여기 참고할 것, obx랑 builder로 감쌌음.()가 빌더에 해당하는 부분
+        return GetMyHomepageController.isLoading.value //GetMyHomepageController.isLoading.value로 변경
          ? loadingWidget() : ListView( //리스트뷰. 리스트 형태로 보여줌. & 로딩 중일때랑 아닐때 분기를 나눠서 표시해야 되기 때문에 ?로 확인
-        children: GetMyHomepageController.stores
+        children: GetMyHomepageController.stores //GetMyHomepageController.stores로 변경
             .where((e) { //일정 이하는 표시 안하기 위한것
         return e.remainStat =='plenty' ||
         e.remainStat =='some' ||
