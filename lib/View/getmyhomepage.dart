@@ -1,28 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_mask/Controller/getmyhomepagecontroller.dart';
-import 'package:flutter_mask/model/store.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
-import 'View/getmyhomepage.dart';
+import '../Controller/getmyhomepagecontroller.dart';
+import '../model/store.dart';
 
-void main() { //main에서 myapp 시작시키기. 별다를게 없다.
-  runApp(
-    GetMaterialApp(home: GetMyHomePage()) //main runApp을 runApp(GetMaterialApp())으로 변경함
-  );
-}
-
-
-class BindingController implements Bindings{ //binding을 클래스 형태로 만들어서 밖에 빼줌
-  @override
-  void dependencies(){
-    Get.putAsync<GetMyHomepageController>(() async => await GetMyHomepageController());
-  }
-}
-
-/*
 class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
   GetMyHomePage({Key key}) : super(key: key); //const 없애고 Key 뒤에 ? 없앰
 
@@ -47,25 +28,25 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
 
       body: Obx(() { //여기 참고할 것, obx랑 builder로 감쌌음.()가 빌더에 해당하는 부분
         return GetMyHomepageController.isLoading.value //GetMyHomepageController.isLoading.value로 변경
-         ? loadingWidget() : ListView( //리스트뷰. 리스트 형태로 보여줌. & 로딩 중일때랑 아닐때 분기를 나눠서 표시해야 되기 때문에 ?로 확인
-        children: GetMyHomepageController.stores //GetMyHomepageController.stores로 변경
-            .where((e) { //일정 이하는 표시 안하기 위한것
-        return e.remainStat =='plenty' ||
-        e.remainStat =='some' ||
-        e.remainStat =='few';
-        })
-            .map((e){
-        return ListTile( //여기가 약국이름(title)&위치(subtitle)&오른쪽(trailing) 리스트로 보여주는 부분.
-        title: Text(e.name),
-        subtitle: Text(e.addr),
-        trailing: _buildRemainStatWidget(e),
-        );
-        })
-        .
-        toList
-        (
-        )
-        ,
+            ? loadingWidget() : ListView( //리스트뷰. 리스트 형태로 보여줌. & 로딩 중일때랑 아닐때 분기를 나눠서 표시해야 되기 때문에 ?로 확인
+          children: GetMyHomepageController.stores //GetMyHomepageController.stores로 변경
+              .where((e) { //일정 이하는 표시 안하기 위한것
+            return e.remainStat =='plenty' ||
+                e.remainStat =='some' ||
+                e.remainStat =='few';
+          })
+              .map((e){
+            return ListTile( //여기가 약국이름(title)&위치(subtitle)&오른쪽(trailing) 리스트로 보여주는 부분.
+              title: Text(e.name),
+              subtitle: Text(e.addr),
+              trailing: _buildRemainStatWidget(e),
+            );
+          })
+              .
+          toList
+            (
+          )
+          ,
         );
 
       }),
@@ -124,5 +105,3 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
     );
   }
 }
-
- */
