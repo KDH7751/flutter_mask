@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class GetMyHomepageController extends GetxController {
+  static GetMyHomepageController get to => Get.find();
   static var stores = List<Store>().obs; //리스트 만들기, 리스트에도 obs 붙여서 관리할 수 있음, 리스트 불러올 떄는 value로 안불러옴. static 붙여서 밖에서도 호출 가능하게 함
   static var isLoading = true.obs; //처음에 앱 실행시 로딩중인 상태로 만들기 위해 우선 true로, static 붙여서 밖에서도 호출 가능하게 함
 
-  static Future fetch() async { //static 붙였음
-    //async - await용
-    //fetch를 본격적으로 하기 전에 로딩중으로 만들기 위해서 true로 둔다.
-    isLoading.value = true;
+  static Future fetch() async { //static 붙였음, async - await용
+
+    isLoading.value = true;//fetch를 본격적으로 하기 전에 로딩중으로 만들기 위해서 true로 둔다.
 
     var url = Uri.parse(
         'https://gist.githubusercontent.com/junsuk5/bb7485d5f70974deee920b8f0cd1e2f0/raw/063f64d9b343120c2cb01a6555cf9b38761b1d94/sample.json');
