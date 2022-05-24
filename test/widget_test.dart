@@ -6,14 +6,16 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mask/View/getmyhomepage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_mask/main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget( MyApp());//const가 myapp 앞에 있었는데 오류떠서 일단 지움
+    await tester.pumpWidget(GetMyHomePage());//myapp이 따로 없어서 오류뜨는거 같길래 getmyhomepage으로 바꿔버림
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

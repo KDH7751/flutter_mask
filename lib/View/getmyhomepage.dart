@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import '../Controller/getmyhomepagecontroller.dart';
 import '../model/store.dart';
 
-class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
+class GetMyHomePage extends GetView<GetMyHomepageController> { //stf -> stl로 변경
   GetMyHomePage({Key key}) : super(key: key); //const 없애고 Key 뒤에 ? 없앰
 
   @override //UI 부분에 해당하는 위젯.
   Widget build(BuildContext context) {
 
-    Get.put(GetMyHomepageController()); //Controller 파일을 불러와서 쓴다고 선언?해줬음
+    // 없어도 되는 Get.put 부분을 삭제하고, Get.find 부분을 넣는 대신 GetView를 사용해서 위치 특정해줌.
 
     return Scaffold(
       appBar: AppBar(
@@ -20,12 +20,12 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
 
         }),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.refresh),onPressed: GetMyHomepageController.fetch,) //새로고침 버튼 눌렀을때 fetch를 하라고 함,GetMyHomepageController.fetch로 변경
+          IconButton(icon: Icon(Icons.refresh),onPressed: controller.fetch) //새로고침 버튼 눌렀을때 fetch를 하라고 함,controller.fetch로 변경
         ],
       ),
 
       body: Obx(() { //여기 참고할 것, obx랑 builder로 감쌌음.()가 빌더에 해당하는 부분
-        return GetMyHomepageController.isLoading.value //GetMyHomepageController.isLoading.value로 변경
+        return controller.isLoading.value //Controller.isLoading.value로 변경
             ? loadingWidget() : ListView( //리스트뷰. 리스트 형태로 보여줌. & 로딩 중일때랑 아닐때 분기를 나눠서 표시해야 되기 때문에 ?로 확인
           children: storesCut()
               .map((e){
@@ -41,7 +41,7 @@ class GetMyHomePage extends StatelessWidget { //stf -> stl로 변경
   }
 
   Iterable<Store> storesCut() { //일정 이하는 표시 안하기 위한 것, 2번 사용되서 밖으로 따로 뺐음
-    return GetMyHomepageController.stores.where((e) {
+    return controller.stores.where((e) { //controller.stores로 변경
           return e.remainStat =='plenty' ||
               e.remainStat =='some' ||
               e.remainStat =='few';
